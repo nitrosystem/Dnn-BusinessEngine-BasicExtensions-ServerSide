@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\MSTest.TestAdapter.2.1.2\build\net45\MSTest.TestAdapter.props" Condition="Exists('..\packages\MSTest.TestAdapter.2.1.2\build\net45\MSTest.TestAdapter.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5631D3CE-0D04-47B0-9517-293ECD1B8DE0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NitroSystem.Dnn.BusinessEngine.BasicServices</RootNamespace>
+    <AssemblyName>NitroSystem.Dnn.BusinessEngine.BasicServices</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.0.0\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.2.0.78\lib\net461\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Contrib, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.Contrib.2.0.78\lib\net461\Dapper.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke, Version=9.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.9.4.4\lib\net45\DotNetNuke.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Abstractions, Version=9.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Abstractions.9.4.4\lib\netstandard2.0\DotNetNuke.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.DependencyInjection, Version=9.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.DependencyInjection.9.4.4\lib\netstandard2.0\DotNetNuke.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Web, Version=9.4.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Web.9.4.4\lib\net45\DotNetNuke.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.WebUtility, Version=4.2.1.783, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Web.9.4.4\lib\net45\DotNetNuke.WebUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.9.4.4\lib\net45\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.1.1\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NitroSystem.Dnn.BusinessEngine.Api">
+      <HintPath>..\..\..\..\..\Dnn\DnnDev\bin\NitroSystem.Dnn.BusinessEngine.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="NitroSystem.Dnn.BusinessEngine.Common">
+      <HintPath>..\..\..\..\..\Dnn\DnnDev\bin\NitroSystem.Dnn.BusinessEngine.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="NitroSystem.Dnn.BusinessEngine.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Dnn\DnnDev\bin\NitroSystem.Dnn.BusinessEngine.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NitroSystem.Dnn.BusinessEngine.Data">
+      <HintPath>..\..\..\..\..\Dnn\DnnDev\bin\NitroSystem.Dnn.BusinessEngine.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="NitroSystem.Dnn.BusinessEngine.Framework">
+      <HintPath>..\..\..\..\..\Dnn\DnnDev\bin\NitroSystem.Dnn.BusinessEngine.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Database\CustomQueryService.cs" />
+    <Compile Include="Database\DataSourceService.cs" />
+    <Compile Include="Database\SubmitEntityService.cs" />
+    <Compile Include="DB\Entities\CustomQueryServiceInfo.cs" />
+    <Compile Include="DB\Entities\DataSourceServiceInfo.cs" />
+    <Compile Include="DB\Entities\SubmitEntityServiceInfo.cs" />
+    <Compile Include="DB\Repositories\CustomQueryServiceRepository.cs" />
+    <Compile Include="DB\Repositories\SubmitEntityServiceRepository.cs" />
+    <Compile Include="DnnServices\ResetPasswordService.cs" />
+    <Compile Include="DnnServices\RegisterUserService.cs" />
+    <Compile Include="DnnServices\LoginUserService.cs" />
+    <Compile Include="Enums\DatabaseObjectType.cs" />
+    <Compile Include="Mapping\CustomQueryServiceMapping.cs" />
+    <Compile Include="Mapping\SubmitEntityServiceMapping.cs" />
+    <Compile Include="Mapping\DataSourceServiceMapping.cs" />
+    <Compile Include="PublicServices\ImportExcelService.cs" />
+    <Compile Include="PublicServices\ImportExcelTemp.cs" />
+    <Compile Include="PublicServices\SendEmailService.cs" />
+    <Compile Include="PublicServices\WebserviceRestfulService.cs" />
+    <Compile Include="PublicServices\SendSmsService.cs" />
+    <Compile Include="ViewModels\Database\CustomQuery\CustomQueryServiceViewModel.cs" />
+    <Compile Include="ViewModels\Database\DataSource\DataSourceServiceViewModel.cs" />
+    <Compile Include="ViewModels\Database\DataSource\EntityInfo.cs" />
+    <Compile Include="ViewModels\Database\DataSource\FilterItemInfo.cs" />
+    <Compile Include="ViewModels\Database\DataSource\EntityJoinRelationInfo.cs" />
+    <Compile Include="ViewModels\Database\DataSource\SortItemInfo.cs" />
+    <Compile Include="ViewModels\Database\DataSource\ViewModelPropertyInfo.cs" />
+    <Compile Include="Enums\QueryType.cs" />
+    <Compile Include="Enums\ActionType.cs" />
+    <Compile Include="ViewModels\Database\SubmitEntity\ColumnInfo.cs" />
+    <Compile Include="ViewModels\Database\SubmitEntity\ConditionInfo.cs" />
+    <Compile Include="ViewModels\Database\SubmitEntity\EntityInfo.cs" />
+    <Compile Include="ViewModels\Database\SubmitEntity\SubmitEntityServiceViewModel.cs" />
+    <Compile Include="ViewModels\PublicService\UserLoginInfo.cs" />
+    <Compile Include="ViewModels\PublicService\UserLoginOptions.cs" />
+    <Compile Include="ViewModels\PublicService\UserRegisterInfo.cs" />
+    <Compile Include="ViewModels\PublicService\UserRegisterOptions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DB\Repositories\DataSourceServiceRepository.cs" />
+    <Compile Include="Startup\RouteMapper.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NitroSystem.Dnn.BusinessEngine.BasicActions\NitroSystem.Dnn.BusinessEngine.BasicActions.csproj">
+      <Project>{2288a8c2-8f3a-4777-b997-86ac9a00d8eb}</Project>
+      <Name>NitroSystem.Dnn.BusinessEngine.BasicActions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\MSTest.TestAdapter.2.1.2\build\net45\MSTest.TestAdapter.targets" Condition="Exists('..\packages\MSTest.TestAdapter.2.1.2\build\net45\MSTest.TestAdapter.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>IF NOT ($(ConfigurationName)) == (Debug) GOTO END
+cd $(ProjectDir)
+copy /y obj\debug\NitroSystem.Dnn.BusinessEngine.BasicServices.dll  D:\Wokstation\Dnn\DnnDev\bin
+:END</PostBuildEvent>
+  </PropertyGroup>
+</Project>
