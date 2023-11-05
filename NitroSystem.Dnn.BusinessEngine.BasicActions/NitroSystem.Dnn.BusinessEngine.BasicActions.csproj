@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Database\CustomQueryAction.cs" />
+    <Compile Include="Database\BindEntityAction.cs" />
     <Compile Include="Database\DataSourceAction.cs" />
     <Compile Include="Database\SubmitEntityAction.cs" />
     <Compile Include="DnnServices\ResetPasswordAction.cs" />

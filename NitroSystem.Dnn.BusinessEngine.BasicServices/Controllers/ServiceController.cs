@@ -26,6 +26,8 @@ using NitroSystem.Dnn.BusinessEngine.Api.Mapping;
 using System.IO;
 using DotNetNuke.Entities.Host;
 using NitroSystem.Dnn.BusinessEngine.BasicServices.PublicServices;
+using NitroSystem.Dnn.BusinessEngine.BasicServices.ViewModels.Database.BindEntity;
+using NitroSystem.Dnn.BusinessEngine.BasicServices.ViewModels.Database.Public;
 
 namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
 {
@@ -136,15 +138,7 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
                 {
                     QueryType = QueryType.QueryDesigner,
                     DatabaseObjectType = DatabaseObjectType.StoredProcedure,
-                    ActionType = ActionType.InsertAndUpdate
                 };
-
-                if (string.IsNullOrEmpty(submitEntityService.BaseQuery))
-                {
-                    submitEntityService.BaseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/extensions/basic/services/sql-templates/submit-entity/insert&update-entity.sql")); ;
-                    submitEntityService.InsertBaseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/extensions/basic/services/sql-templates/submit-entity/insert-entity.sql")); ;
-                    submitEntityService.UpdateBaseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/extensions/basic/services/sql-templates/submit-entity/update-entity.sql")); ;
-                }
 
                 if (submitEntityService.QueryType == QueryType.CustomQuery && !string.IsNullOrEmpty(submitEntityService.StoredProcedureName))
                 {
@@ -166,7 +160,7 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
         [HttpPost]
         public HttpResponseMessage CreateSubmitEntityService([FromBody] SubmitEntityServiceViewModel submitEntityService, [FromUri] bool isNewService = false)
         {
-            string submitEntityQuery = string.Empty;
+            string submitEntityQuery = submitEntityService.BaseQuery;
 
             var service = submitEntityService.Service;
 
@@ -185,36 +179,6 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
                 }
                 else
                 {
-                    string baseQuery = string.Empty;
-
-                    if (submitEntityService.ActionType == ActionType.InsertAndUpdate)
-                    {
-                        baseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/extensions/basic/services/sql-templates/submit-entity/insert&update-entity.sql"));
-                        if (submitEntityService.BaseQuery == baseQuery) submitEntityService.BaseQuery = null;
-                        submitEntityQuery = submitEntityService.BaseQuery != null ? submitEntityService.BaseQuery : baseQuery;
-
-                        submitEntityService.InsertBaseQuery = null;
-                        submitEntityService.UpdateBaseQuery = null;
-                    }
-                    else if (submitEntityService.ActionType == ActionType.Insert)
-                    {
-                        baseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/extensions/basic/services/sql-templates/submit-entity/insert-entity.sql"));
-                        if (submitEntityService.InsertBaseQuery == baseQuery) submitEntityService.InsertBaseQuery = null;
-                        submitEntityQuery = submitEntityService.InsertBaseQuery != null ? submitEntityService.InsertBaseQuery : baseQuery;
-
-                        submitEntityService.BaseQuery = null;
-                        submitEntityService.UpdateBaseQuery = null;
-                    }
-                    if (submitEntityService.ActionType == ActionType.Update)
-                    {
-                        baseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/extensions/basic/services/sql-templates/submit-entity/update-entity.sql"));
-                        if (submitEntityService.UpdateBaseQuery == baseQuery) submitEntityService.UpdateBaseQuery = null;
-                        submitEntityQuery = submitEntityService.UpdateBaseQuery != null ? submitEntityService.UpdateBaseQuery : baseQuery;
-
-                        submitEntityService.BaseQuery = null;
-                        submitEntityService.InsertBaseQuery = null;
-                    }
-
                     var entity = submitEntityService.Entity;
 
                     var serviceParams = new List<ServiceParamInfo>();
@@ -354,19 +318,14 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
             {
                 var dataSourceService = DataSourceServiceMapping.GetDataSourceServiceViewModel(serviceID);
 
-                string baseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/extensions/basic/services/sql-templates/data-source/data-source.sql"));
-
                 dataSourceService = dataSourceService ?? new DataSourceServiceViewModel()
                 {
-                    BaseQuery = baseQuery,
                     QueryType = QueryType.QueryDesigner,
                     DatabaseObjectType = DatabaseObjectType.StoredProcedure,
-                    Entities = Enumerable.Empty<ViewModels.Database.DataSource.EntityInfo>(),
+                    Entities = Enumerable.Empty<ViewModels.Database.Public.EntityInfo>(),
                     Filters = Enumerable.Empty<FilterItemInfo>(),
                     SortItems = Enumerable.Empty<SortItemInfo>(),
                 };
-
-                if (string.IsNullOrEmpty(dataSourceService.BaseQuery)) dataSourceService.BaseQuery = baseQuery;
 
                 if (dataSourceService.QueryType == QueryType.CustomQuery && !string.IsNullOrEmpty(dataSourceService.StoredProcedureName))
                 {
@@ -388,7 +347,7 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
         [HttpPost]
         public HttpResponseMessage CreateDataSourceService([FromBody] DataSourceServiceViewModel dataSourceService, [FromUri] bool isNewService = false)
         {
-            string dataSourceQuery = string.Empty;
+            string dataSourceQuery = dataSourceService.BaseQuery;
 
             var service = dataSourceService.Service;
 
@@ -404,10 +363,6 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
                 }
                 else
                 {
-                    string baseQuery = FileUtil.GetFileContent(HttpContext.Current.Server.MapPath("~/DesktopModules/BusinessEngine/Content/SqlTemplates/StoredProcedure/GetDataSource.sql"));
-                    if (dataSourceService.BaseQuery == baseQuery) dataSourceService.BaseQuery = null;
-                    dataSourceQuery = dataSourceService.BaseQuery != null ? dataSourceService.BaseQuery : baseQuery;
-
                     var spParams = new List<string>();
                     var selectedColumns = new List<string>();
                     var entities = new List<string>();
@@ -462,7 +417,7 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
                     }
                     else
                     {
-                        foreach (var entity in dataSourceService.Entities ?? Enumerable.Empty<ViewModels.Database.DataSource.EntityInfo>())
+                        foreach (var entity in dataSourceService.Entities ?? Enumerable.Empty<ViewModels.Database.Public.EntityInfo>())
                         {
                             string item = string.Format(" dbo.[{0}] as {1} ", entity.TableName, entity.AliasName);
 
@@ -567,6 +522,194 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicServices.Controllers
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, dataSourceService.ItemID);
+            }
+            catch (Exception ex)
+            {
+                if (isNewService) ServiceRepository.Instance.DeleteService(service.ServiceID);
+
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { Message = ex.Message, Query = dataSourceQuery });
+            }
+        }
+
+        #endregion
+
+        #region Bind Entity Services
+
+        [DnnAuthorize(StaticRoles = "Administrators")]
+        [HttpGet]
+        public HttpResponseMessage GetBindEntityService()
+        {
+            return GetDataSourceService(Guid.Empty);
+        }
+
+        [DnnAuthorize(StaticRoles = "Administrators")]
+        [HttpGet]
+        public HttpResponseMessage GetBindEntityService(Guid serviceID)
+        {
+            try
+            {
+                var dataSourceService = DataSourceServiceMapping.GetDataSourceServiceViewModel(serviceID);
+
+                dataSourceService = dataSourceService ?? new DataSourceServiceViewModel()
+                {
+                    QueryType = QueryType.QueryDesigner,
+                    DatabaseObjectType = DatabaseObjectType.StoredProcedure,
+                    Entities = Enumerable.Empty<ViewModels.Database.Public.EntityInfo>(),
+                    Filters = Enumerable.Empty<FilterItemInfo>(),
+                    SortItems = Enumerable.Empty<SortItemInfo>(),
+                };
+
+                if (dataSourceService.QueryType == QueryType.CustomQuery && !string.IsNullOrEmpty(dataSourceService.StoredProcedureName))
+                {
+                    dataSourceService.CustomQuery = General.GetSpScript(dataSourceService.StoredProcedureName);
+
+                    dataSourceService.Service = new ServiceViewModel();
+                    dataSourceService.Service.Params = General.GetSpParams(dataSourceService.StoredProcedureName);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, dataSourceService);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+        }
+
+        [DnnAuthorize(StaticRoles = "Administrators")]
+        [HttpPost]
+        public HttpResponseMessage CreateBindEntityService([FromBody] BindEntityServiceViewModel bindEntityService, [FromUri] bool isNewService = false)
+        {
+            string dataSourceQuery = bindEntityService.BaseQuery;
+
+            var service = bindEntityService.Service;
+
+            try
+            {
+                if (bindEntityService.QueryType == QueryType.CustomQuery)
+                {
+                    dataSourceQuery = bindEntityService.CustomQuery;
+
+                    DbUtil.ExecuteSql(string.Format("IF OBJECT_ID('{0}.{1}', 'P') IS NOT NULL \n\t DROP PROCEDURE {0}.{1} \n", "dbo", bindEntityService.StoredProcedureName));
+
+                    DbUtil.ExecuteSql(dataSourceQuery);
+                }
+                else
+                {
+                    dataSourceQuery = bindEntityService.BaseQuery;
+
+                    var spParams = new List<string>();
+                    var selectedColumns = new List<string>();
+                    var entities = new List<string>();
+                    var filters = new List<string>();
+
+                    foreach (var property in bindEntityService.EntityColumns)
+                    {
+                        string value = string.Empty;
+
+                        if (property.ValueType == "DataSource" && !string.IsNullOrEmpty(property.EntityAliasName) && !string.IsNullOrEmpty(property.ColumnName))
+                            value = property.EntityAliasName + "." + property.ColumnName;
+                        else if (property.ValueType == "Custom" && !string.IsNullOrEmpty(property.Value))
+                            value = property.Value;
+
+                        if (!string.IsNullOrEmpty(value)) selectedColumns.Add(string.Format("{0} as {1}", value, property.ColumnName));
+                    }
+
+                    //Service Params
+                    if (service.Params != null)
+                    {
+                        foreach (var serviceParam in service.Params)
+                        {
+                            spParams.Add(string.Format("{0} {1} {2}", serviceParam.ParamName, serviceParam.ParamType, !string.IsNullOrEmpty(serviceParam.DefaultValue) ? (" = " + serviceParam.DefaultValue) : ""));
+                        }
+                    }
+
+                    if (bindEntityService.JoinRelationships != null && bindEntityService.JoinRelationships.Any())
+                    {
+                        var existsEntities = new List<string>();
+
+                        var firstJoin = bindEntityService.JoinRelationships.First();
+
+                        string itemss = string.Format(" dbo.[{0}] as {1} ", firstJoin.LeftEntityTableName, firstJoin.LeftEntityAliasName);
+
+                        foreach (var relationship in bindEntityService.JoinRelationships ?? Enumerable.Empty<EntityJoinRelationInfo>())
+                        {
+                            itemss += string.Format(" {0} dbo.{1} as {2} on {3} ", relationship.JoinType, relationship.RightEntityTableName, relationship.RightEntityAliasName, relationship.JoinConditions);
+
+                            existsEntities.Add(relationship.LeftEntityAliasName);
+                            existsEntities.Add(relationship.RightEntityAliasName);
+                        }
+                        entities.Add(itemss);
+                    }
+                    else
+                    {
+                        foreach (var entity in bindEntityService.Entities ?? Enumerable.Empty<ViewModels.Database.Public.EntityInfo>())
+                        {
+                            string item = string.Format(" dbo.[{0}] as {1} ", entity.TableName, entity.AliasName);
+
+                            entities.Add(item);
+                        }
+                    }
+
+                    if (bindEntityService.Filters != null)
+                    {
+                        foreach (var group in bindEntityService.Filters.GroupBy(f => f.ConditionGroupName))
+                        {
+                            var queryGroup = new List<string>();
+                            foreach (var filter in group)
+                            {
+                                if (filter.Type == 1) queryGroup.Add(filter.CustomQuery);
+                            }
+
+                            if (queryGroup.Count > 0) filters.Add(string.Format("({0})", string.Join(" or ", queryGroup)));
+                        }
+                    }
+
+                    dataSourceQuery = dataSourceQuery.Replace("{Schema}", "dbo");
+                    dataSourceQuery = dataSourceQuery.Replace("{ProcedureName}", bindEntityService.StoredProcedureName);
+                    dataSourceQuery = dataSourceQuery.Replace("{SpParams}", string.Join(",\n", spParams));
+                    dataSourceQuery = dataSourceQuery.Replace("{SelectedColumns}", string.Join(",", selectedColumns));
+                    dataSourceQuery = dataSourceQuery.Replace("{Entities}", string.Join(",\n", entities));
+                    dataSourceQuery = dataSourceQuery.Replace("{Filters}", filters.Any() ? "WHERE \n\t\t" + string.Join(" and\n\t\t", filters) : string.Empty);
+
+                    string connectionString = "";
+
+                    if (service.DatabaseID != null)
+                    {
+                        var database = DatabaseRepository.Instance.GetDatabase(service.DatabaseID.Value);
+                        connectionString = database != null ? database.ConnectionString : "";
+                    }
+
+                    string dropQuery = string.Format("IF OBJECT_ID('{0}.{1}', 'P') IS NOT NULL \n\t DROP PROCEDURE {0}.{1}; \nGO\n", "dbo", bindEntityService.StoredProcedureName);
+
+                    string query = dropQuery + dataSourceQuery;
+
+                    DbUtil.ExecuteTransaction(query);
+
+                    var objBindEntityServiceInfo = new BindEntityServiceInfo()
+                    {
+                        ItemID = bindEntityService.ItemID,
+                        ServiceID = bindEntityService.ServiceID,
+                        EntityID = bindEntityService.EntityID,
+                        QueryType = bindEntityService.QueryType,
+                        DatabaseObjectType = bindEntityService.DatabaseObjectType,
+                        StoredProcedureName = bindEntityService.StoredProcedureName,
+                        BaseQuery = bindEntityService.BaseQuery,
+                        Entities = JsonConvert.SerializeObject(bindEntityService.Entities),
+                        JoinRelationships = JsonConvert.SerializeObject(bindEntityService.JoinRelationships),
+                        EntityColumns= JsonConvert.SerializeObject(bindEntityService.EntityColumns),
+                        Filters = JsonConvert.SerializeObject(bindEntityService.Filters),
+                        Settings = JsonConvert.SerializeObject(bindEntityService.Settings)
+                    };
+
+                    if (bindEntityService.ItemID == Guid.Empty)
+                        bindEntityService.ItemID = BindEntityServiceRepository.AddBindEntityService(objBindEntityServiceInfo);
+                    else
+                        BindEntityServiceRepository.UpdateBindEntityService(objBindEntityServiceInfo);
+
+                    General.SaveServiceParams(service.ServiceID, service.Params);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, bindEntityService.ItemID);
             }
             catch (Exception ex)
             {

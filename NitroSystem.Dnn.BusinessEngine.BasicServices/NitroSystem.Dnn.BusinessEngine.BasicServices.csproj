@@ -112,12 +112,15 @@
   <ItemGroup>
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Database\CustomQueryService.cs" />
+    <Compile Include="Database\BindEntityService.cs" />
     <Compile Include="Database\DataSourceService.cs" />
     <Compile Include="Database\SubmitEntityService.cs" />
     <Compile Include="DB\Entities\CustomQueryServiceInfo.cs" />
+    <Compile Include="DB\Entities\BindEntityServiceInfo.cs" />
     <Compile Include="DB\Entities\DataSourceServiceInfo.cs" />
     <Compile Include="DB\Entities\SubmitEntityServiceInfo.cs" />
     <Compile Include="DB\Repositories\CustomQueryServiceRepository.cs" />
+    <Compile Include="DB\Repositories\BindEntityServiceRepository.cs" />
     <Compile Include="DB\Repositories\SubmitEntityServiceRepository.cs" />
     <Compile Include="DnnServices\ResetPasswordService.cs" />
     <Compile Include="DnnServices\RegisterUserService.cs" />
@@ -132,11 +135,13 @@
     <Compile Include="PublicServices\WebserviceRestfulService.cs" />
     <Compile Include="PublicServices\SendSmsService.cs" />
     <Compile Include="ViewModels\Database\CustomQuery\CustomQueryServiceViewModel.cs" />
+    <Compile Include="ViewModels\Database\BindEntity\BindEntityServiceViewModel.cs" />
+    <Compile Include="ViewModels\Database\BindEntity\EntityColumnInfo.cs" />
     <Compile Include="ViewModels\Database\DataSource\DataSourceServiceViewModel.cs" />
-    <Compile Include="ViewModels\Database\DataSource\EntityInfo.cs" />
-    <Compile Include="ViewModels\Database\DataSource\FilterItemInfo.cs" />
-    <Compile Include="ViewModels\Database\DataSource\EntityJoinRelationInfo.cs" />
-    <Compile Include="ViewModels\Database\DataSource\SortItemInfo.cs" />
+    <Compile Include="ViewModels\Database\Public\EntityInfo.cs" />
+    <Compile Include="ViewModels\Database\Public\FilterItemInfo.cs" />
+    <Compile Include="ViewModels\Database\Public\EntityJoinRelationInfo.cs" />
+    <Compile Include="ViewModels\Database\Public\SortItemInfo.cs" />
     <Compile Include="ViewModels\Database\DataSource\ViewModelPropertyInfo.cs" />
     <Compile Include="Enums\QueryType.cs" />
     <Compile Include="Enums\ActionType.cs" />

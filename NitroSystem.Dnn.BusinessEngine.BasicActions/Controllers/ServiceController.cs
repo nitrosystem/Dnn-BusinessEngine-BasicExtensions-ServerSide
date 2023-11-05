@@ -98,6 +98,27 @@ namespace NitroSystem.Dnn.BusinessEngine.BasicActions.Controllers
 
         [AllowAnonymous]
         [HttpPost]
+        public async Task<HttpResponseMessage> CallBindEntityAction(ActionDto action)
+        {
+            try
+            {
+                this._moduleData.InitModuleData(action.ModuleID, action.ConnectionID, this.UserInfo.UserID, action.Form, action.Field, action.PageUrl);
+
+                var actionController = new BindEntityAction(this._serviceWorker, this._actionWorker, action);
+
+                var result = (ServiceResult)await actionController.ExecuteAsync<object>(false);
+                if (result.IsError) throw result.ErrorException;
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new { Message = ex.Message });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
         public async Task<HttpResponseMessage> CallCustomQueryAction(ActionDto action)
         {
             try

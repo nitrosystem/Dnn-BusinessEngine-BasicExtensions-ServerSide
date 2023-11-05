@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace NitroSystem.Dnn.BusinessEngine.BasicServices.ViewModels.Database.DataSource
+namespace NitroSystem.Dnn.BusinessEngine.BasicServices.ViewModels.Database.Public
 {
     public class EntityInfo
     {

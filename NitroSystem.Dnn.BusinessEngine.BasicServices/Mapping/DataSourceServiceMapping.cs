@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using NitroSystem.Dnn.BusinessEngine.BasicServices.DB.Entities;
 using NitroSystem.Dnn.BusinessEngine.BasicServices.DB.Repositories;
 using NitroSystem.Dnn.BusinessEngine.BasicServices.ViewModels.Database.DataSource;
+using NitroSystem.Dnn.BusinessEngine.BasicServices.ViewModels.Database.Public;
 using NitroSystem.Dnn.BusinessEngine.Common.TypeCasting;
 using System;
 using System.Collections;
